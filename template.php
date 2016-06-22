@@ -5,15 +5,23 @@
  */
 
 function dlts_photo_oembed_html_head_alter(&$head_elements) {
-
   $head_elements = array();
 }
 
 function dlts_photo_oembed_js_alter(&$javascript) {
+  
   $scripts = array();
+  
   $openLayers = variable_get('dlts_image_openlayers_source', 'sites/all/libraries/openlayers/lib/OpenLayers.js');
-  $yui = variable_get('dlts_photo_oembed_yui_path', 'http://yui.yahooapis.com/3.15.0/build/yui/yui-min.js');
+  
+  //$yui = variable_get('dlts_photo_oembed_yui_path', 'http://yui.yahooapis.com/3.15.0/build/yui/yui-min.js');
+  
+  $yui = 'http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js';
+  
   $ui = path_to_theme() . '/js/dlts_photo_oembed.js';
+  
+  $crossframe = path_to_theme() . '/js/crossframe.js';
+  
   /** If is inline; let it be */
   foreach($javascript as $key => $value ) {
     if (is_int($key)) {
@@ -22,23 +30,19 @@ function dlts_photo_oembed_js_alter(&$javascript) {
   }
   
   if (isset($javascript[$openLayers])) {
-
     $scripts[$openLayers] = $javascript[$openLayers];
-
   }
-  
 
   if (isset($javascript[$yui])) {
-
     $scripts[$yui] = $javascript[$yui];
-
   }
-  
+
+  if (isset($javascript[$crossframe])) {
+    $scripts[$crossframe] = $javascript[$crossframe];
+  }  
 
   if (isset($javascript[$ui])) {
-
     $scripts[$ui] = $javascript[$ui];
-
   }
   
   $javascript = $scripts;
@@ -200,12 +204,18 @@ function dlts_photo_oembed_preprocess_page( &$vars ) {
   
   if ( isset ( $vars['node'] ) ) {
     if ( $vars['node']->type == 'dlts_photograph' ) {
+      $yui = 'http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js';
       /** Add YUI Library from YUI Open CDN */
-      drupal_add_js('http://yui.yahooapis.com/3.15.0/build/yui/yui-min.js', 'external', array('group' => JS_LIBRARY, 'weight' => -100 ));
+      drupal_add_js($yui, 'external', array('group' => JS_LIBRARY, 'weight' => -100 ));
+   
+      drupal_add_js($theme_path . '/js/crossframe.js', array('type' => 'file', 'scope' => 'header', 'weight' => 4));
+      
       drupal_add_js($theme_path . '/js/dlts_photo_oembed.js', array('type' => 'file', 'scope' => 'header', 'weight' => 5));
+   
       if (isset($browser['msie']) && $browser['msie'] < 10) {
         drupal_add_js ( $theme_path . '/js/history.js', array('group' => JS_LIBRARY, 'weight' => -101 ));
       }
+      
     }
   }
   

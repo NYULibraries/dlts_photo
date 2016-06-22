@@ -1316,3 +1316,13 @@ background-color:#FFFFFF;
   display:none;
   visibility: hidden;
 }
+
+.navbar-fullscreen {
+  float: right;
+  margin-right: 1em;
+}
+
+
+.navbar-fullscreen a span {
+  background-image: initial;
+}

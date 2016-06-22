@@ -1,6 +1,61 @@
-;YUI().use('node', 'event', 'pjax', function (Y) {
-  
+;YUI().use('node', 'event', 'event-custom', 'pjax', 'gallery-soon', 'crossframe', function (Y) {
+
   'use strict';
+  
+  /** set a X-PJAX HTTP header for all IO requests */
+  Y.io.header('X-PJAX', 'true');  
+  
+  var html = Y.one('html');  
+  
+  function fullscreenOn(e) {
+      var docElm = document.documentElement;
+      var metadata = Y.one('.pagemeta');
+      var top = Y.one('.top');
+      var button = Y.one('#button-metadata');
+      if (button) {
+    	button.removeClass('on');
+      }
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      }
+      else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
+      else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      }
+      else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen();
+      }
+      if (top) {
+        top.addClass('hidden');      
+      }
+      Y.CrossFrame.postMessage("parent", JSON.stringify({fire: 'button:button-fullscreen:on'}));
+  }
+
+  function fullscreenOff(e) {
+      var fullscreenButton = Y.one('a.fullscreen');
+      var top = Y.one('.top');
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }      
+      else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+      else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      }
+      else if (document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen();
+      }
+      if (fullscreenButton) {
+        fullscreenButton.blur();
+      }
+      if (top) {
+        top.removeClass('hidden');      
+      }
+      Y.CrossFrame.postMessage("parent", JSON.stringify({fire: 'button:button-fullscreen:off'}));
+  }   
   
   var embedded = window.self !== window.top;
   
@@ -154,6 +209,51 @@ function onThumbnails(e) {
       this.show();
   };
   
+  function on_button_click(e) {
+      e.preventDefault();
+      var self = this;
+      var current_target = e.currentTarget;
+      var event_prefix; 
+      var event_id; 
+      var node_target;
+      var data_target;
+      /** don't waste time if the button is inactive */
+      if (current_target.hasClass('inactive')) return;
+      /** if current target has target, get target from data-target */
+      if (current_target.hasClass('target')) {
+        data_target = self.getAttribute('data-target');
+        event_prefix = 'button:' + data_target;
+        /** look-up for the main target */
+        node_target = Y.all('#' + data_target);
+      }
+      /** current target is the main target */
+      else {
+        event_id = self.get('id');
+        event_prefix = 'button:' + event_id;
+        /** find possible reference targets to this target */
+        node_target = Y.all('a[data-target=' + event_id + ']');
+      }
+      if (self.hasClass('on')) {
+        self.removeClass('on');
+        if (Y.Lang.isObject(node_target)) {
+          node_target.each(function(node) {
+            node.removeClass('on');
+          });
+        }
+        Y.fire(event_prefix + ':off', e);
+      } 
+      else {
+        self.addClass('on');
+        if (Y.Lang.isObject(node_target)) {
+          node_target.each(function(node) {
+            node.addClass('on');
+          });
+        }
+        Y.fire(event_prefix + ':on', e);
+      }
+      Y.fire(event_prefix + ':toggle', e);
+  }  
+  
   Y.one('body').delegate('click', pjax_callback, 'a.previous-page, a.next-page');
   
   Y.one('body').delegate('click', onThumbnails, 'a.thumbnails');  
@@ -163,9 +263,15 @@ function onThumbnails(e) {
   pjax.on('navigate', pjax_navigate, Y.one('.pane.load'));
   
   Y.on('contentready', function() {
-      Y.later(500, Y.one('.pane.load'), function() {
-          this.hide();
-      });
+    Y.soon(function() { 
+          Y.one('.pane.load').hide();
+    });  
   }, '.dlts_image_map');
+  
+  Y.on('button:button-fullscreen:on', fullscreenOn);
+
+  Y.on('button:button-fullscreen:off', fullscreenOff);  
+  
+  html.delegate('click', on_button_click, 'a.button');  
 
 });
