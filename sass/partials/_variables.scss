@@ -1,0 +1,20 @@
+$navbar-columns: 12;     
+$navbar-spacer-1: 2;
+$navbar-spacer-2: 1;
+
+// Typography 
+$controls-image: url('../images/book-viewer-icons.png');
+$active-opacity: 1;
+$normal-opacity: .7;
+$dimmed-opacity: .2; 
+$pager-fonts:"Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; 
+
+$link-color:#cc341f;
+$link-color-over: saturate($link-color, 10%);
+$link-color-visited: desaturate($link-color, 20%);
+
+$light-background:#e5e5e5;
+$dark-background:#515151;  
+
+$page-background:#666;
+$metadata-background:#fcfcfc;

@@ -1,0 +1,568 @@
+@import "partials/_variables";
+
+html, body.node-type-dlts-photograph, .pjax-container, .dlts_image_map {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: $page-background;
+}
+
+a, a:link {
+  text-decoration:none;
+  color:$link-color;
+}  
+     
+a:visited {  
+  text-decoration:none;
+  color:$link-color-visited;
+}
+
+/* Hover/active link styles. Don't forget :focus for accessibility */
+a:hover,
+a:focus,
+a:active {
+  text-decoration:underline;
+  color:$link-color-over;
+}
+
+.wrapper {
+  padding: 0;
+  margin:0 auto;
+} 
+
+#header {
+  padding:.5em 1em;
+  background:$light-background;
+}
+
+#site-name {
+  margin:0;
+}
+
+#block-search-form {
+  float:right;
+}
+
+#page-title {
+  margin:0;
+  padding:0 .25em;
+  background:$dark-background;   
+  color:#fff;
+  height: 30px;
+  line-height:1.1em;  
+  overflow:hidden;
+  span {
+    display:block;
+    float:left;
+    width:44px;
+    height:30px;
+    background-image: url(../images/book-viewer-icons.png);
+    background-position: -488px -9px;
+    opacity:$active-opacity;  
+  }
+}
+
+#book-navbar { 
+  width:100%;
+  height: 50px;
+  background:$light-background; 
+  overflow:hidden;
+}
+
+.navbar-spacer {
+  display:block;
+  float:left;
+  height:44px;
+  &.navbar-spacer-1 { 
+    width:(100% / $navbar-columns) * $navbar-spacer-1;
+  }
+  &.navbar-spacer-2 { 
+    width:(100% / $navbar-columns) * $navbar-spacer-2;
+  } 
+}
+
+.navbar { 
+  display:inline;
+  .navbar-item { 
+    width:100% / ($navbar-columns);
+    min-width:48px;
+    display:inline;
+    float: left;
+    margin:0;  
+  }  
+  a, 
+  span,
+  .olControlDLTSZoomInItemInactive,
+  .olControlDLTSZoomOutItemInactive {
+    display: block;
+    margin:0 auto;
+    width: 44px;
+    height: 46px;
+    background-image: $controls-image;
+    background-repeat: no-repeat;
+    text-indent: -1000em;
+    opacity:$normal-opacity;
+  }
+}
+
+.navbar span {
+  &:hover {
+    opacity:$active-opacity;
+  } 
+  &.first-page-off,
+  &.first-page-off:hover {
+      background-position: -400px 0px;
+      opacity:$dimmed-opacity;
+      cursor: default;
+  }
+  &.previous-page-off, 
+  &.previous-page-off:hover {
+    background-position: -312px 0;
+    opacity:$dimmed-opacity;
+    cursor: default;
+  }
+  &.next-page-off, 
+  &.next-page-off:hover {
+    background-position: -356px 0; 
+    opacity:$dimmed-opacity;
+    cursor: default;
+  }
+  &.last-page-off,
+  &.last-page-off:hover { 
+    background-position: -444px 0;
+    opacity:$dimmed-opacity;
+    cursor: default;
+  }
+} 
+
+.navbar a {
+  &:hover {
+    opacity:$active-opacity;
+  }
+  &.double-page { 
+    background-position: 0 0;
+  }
+  &.double-page {
+    width: 52px;
+    background-position: -42px 0;
+  }
+  &.thumbnails {
+    background-position: -92px 0;
+  }
+  &.fullscreen {
+    background-position: -136px 0;
+  }
+  &.fullscreen-on {
+    background-position: -180px 0;
+  }
+  &.zoom_in,
+  &.zoom_in:hover {
+    background-position: -268px 0;
+  }
+  &.zoom_out,
+  &.zoom_out:hover {
+    background-position: -224px 0;
+  }
+  &.zoom_in_max {
+    background-position: -268px 0;   
+    opacity:$dimmed-opacity;
+    cursor: default;
+  }
+  &.zoom_out_min {
+    background-position: -224px 0;
+    opacity:$dimmed-opacity;
+    cursor: default;
+  }
+  &.zoom_out_min:hover {
+    cursor: default;  
+  }
+  &.first-page { 
+    background-position: -400px 0px;
+  }
+  &.previous-page { 
+    background-position: -312px 0;
+  }
+  &.next-page {
+    background-position: -356px 0;
+  }
+  &.last-page { 
+    background-position: -444px 0;
+  }
+  &.thumbnails {
+    background-position: -92px 0;
+  }  
+}
+
+.navbar #control-zoom div {
+  &:hover {
+    opacity:$active-opacity;
+  }
+  &.olControlDLTSZoomInItemInactive {
+    background-position: -268px 0;
+  }
+  &.olControlDLTSZoomOutItemInactive {
+    background-position: -224px 0;
+  }
+} 
+ 
+// Pager Contols
+#book-navbar {
+  .item-list {
+    display:block;
+    height:100%;
+    text-align:center;
+    .pager li {
+      padding:0;
+      margin:0; 
+    } 
+  }
+}
+
+.pager {
+  display:inline;
+  li { 
+    font-family: $pager-fonts;
+    width:100% / ($navbar-columns + 2);
+    min-width:48px;
+    display:inline;
+    float: left;
+   
+    &.pager-previous a,
+    &.pager-first a,
+    &.pager-next a,
+    &.pager-last a { 
+       background-image: $controls-image;
+       background-repeat: no-repeat;
+       text-indent: -1000em;
+     }
+     &.pager-first a { 
+       background-position: -400px 0px;
+     }
+     &.pager-previous a { 
+       background-position: -312px 0;
+     }
+     &.pager-next a {
+       background-position: -356px 0;
+     }
+     &.pager-last a { 
+       background-position: -444px 0;
+     }
+     &.pager-current,
+     &.pager-ellipsis {
+        float:left;
+        display: block;
+        margin:12px auto;
+        width:100% / ($navbar-columns + 2);
+        min-width:48px;
+        height: 46px; 
+        font-size:1.4em;
+        border:none;
+        line-height:2em;
+     }
+    &.pager-item a {
+      background-image: none;
+      text-indent: 0em;
+    }
+     a {
+       display: block;
+       margin:0 auto;
+        
+       width: 44px;
+       height: 46px;
+       font-size:1.4em;
+       line-height:2em;
+       border:none;
+       opacity:$normal-opacity;
+       &:hover {
+         opacity:$active-opacity;
+         text-decoration:none;
+       }
+     } 
+  }
+}
+
+.dlts-photo-gallery, .view-photo-sets {
+  .views-view-grid.cols-4 {
+    width:100%;
+    td {
+      margin:auto;
+      padding:10px;
+      vertical-align:middle;
+      align: center;
+      img {
+        max-width:220px;
+      }
+      a, a.link {
+        color: white;
+      }
+    }
+  }
+  .field-item {
+    align: right;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+
+html,
+body,
+.dlts_image_map,
+.pjax-container,
+.node.pjax {
+  width:100%;
+  height:100%;
+}
+
+body.node-type-dlts-photograph {
+  overflow:hidden;
+  margin:0!important;
+  padding:0!important;
+}
+
+.dlts_image_map, {
+  float:none;
+}
+
+#control-zoom div div {
+  cursor:pointer;
+}
+
+#control-zoom div.zoom-maxed div,
+#control-zoom div.zoom-maxed div:hover {
+  cursor:default;
+  opacity:0.2;
+}
+
+#control-zoom div.zoom-maxed-in div {
+  background-position:-268px 0;
+}
+
+#control-zoom div.zoom-maxed-out div {
+  background-position:-224px 0;
+}
+
+#header,
+#page-title,
+#pagemeta,
+.element-invisible {
+  display:none;
+}
+
+.dlts-photo-gallery {
+  width:100%;
+}
+
+#book-navbar {
+  width: 100%;
+  height: 50px;
+  background: #e5e5e5;
+  overflow: hidden;
+}
+
+.navbar ul {
+  margin-top: 0;
+  display: inline;  
+}
+
+.navbar ul li {
+  display: inline;
+}
+
+#control-zoom {
+  display: inline;
+}
+
+.views-row {
+  margin-left: .5em;
+  margin-right: .5em;
+}
+
+ul.links.inline {
+  list-style: none;
+}
+
+.node.pjax a.next-page, .node.pjax a.previous-page {
+  display: none;
+  visibility: hidden;
+}
+
+.pane.load {
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  height: 39px;
+  width: 176px;
+}
+
+#squaresWaveG{
+position:relative;
+width:240px;
+height:29px}
+
+.squaresWaveG{
+position:absolute;
+top:0;
+background-color:#000000;
+width:29px;
+height:29px;
+-moz-animation-name:bounce_squaresWaveG;
+-moz-animation-duration:1.3s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear;
+-webkit-animation-name:bounce_squaresWaveG;
+-webkit-animation-duration:1.3s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-ms-animation-name:bounce_squaresWaveG;
+-ms-animation-duration:1.3s;
+-ms-animation-iteration-count:infinite;
+-ms-animation-direction:linear;
+-o-animation-name:bounce_squaresWaveG;
+-o-animation-duration:1.3s;
+-o-animation-iteration-count:infinite;
+-o-animation-direction:linear;
+animation-name:bounce_squaresWaveG;
+animation-duration:1.3s;
+animation-iteration-count:infinite;
+animation-direction:linear;
+}
+
+#squaresWaveG_1{
+left:0;
+-moz-animation-delay:0.52s;
+-webkit-animation-delay:0.52s;
+-ms-animation-delay:0.52s;
+-o-animation-delay:0.52s;
+animation-delay:0.52s;
+}
+
+#squaresWaveG_2{
+left:30px;
+-moz-animation-delay:0.65s;
+-webkit-animation-delay:0.65s;
+-ms-animation-delay:0.65s;
+-o-animation-delay:0.65s;
+animation-delay:0.65s;
+}
+
+#squaresWaveG_3{
+left:60px;
+-moz-animation-delay:0.78s;
+-webkit-animation-delay:0.78s;
+-ms-animation-delay:0.78s;
+-o-animation-delay:0.78s;
+animation-delay:0.78s;
+}
+
+#squaresWaveG_4{
+left:90px;
+-moz-animation-delay:0.91s;
+-webkit-animation-delay:0.91s;
+-ms-animation-delay:0.91s;
+-o-animation-delay:0.91s;
+animation-delay:0.91s;
+}
+
+#squaresWaveG_5{
+left:120px;
+-moz-animation-delay:1.04s;
+-webkit-animation-delay:1.04s;
+-ms-animation-delay:1.04s;
+-o-animation-delay:1.04s;
+animation-delay:1.04s;
+}
+
+#squaresWaveG_6{
+left:150px;
+-moz-animation-delay:1.17s;
+-webkit-animation-delay:1.17s;
+-ms-animation-delay:1.17s;
+-o-animation-delay:1.17s;
+animation-delay:1.17s;
+}
+
+#squaresWaveG_7{
+left:180px;
+-moz-animation-delay:1.3s;
+-webkit-animation-delay:1.3s;
+-ms-animation-delay:1.3s;
+-o-animation-delay:1.3s;
+animation-delay:1.3s;
+}
+
+#squaresWaveG_8{
+left:210px;
+-moz-animation-delay:1.43s;
+-webkit-animation-delay:1.43s;
+-ms-animation-delay:1.43s;
+-o-animation-delay:1.43s;
+animation-delay:1.43s;
+}
+
+@-moz-keyframes bounce_squaresWaveG{
+0%{
+background-color:#000000;
+}
+
+100%{
+background-color:#FFFFFF;
+}
+
+}
+
+@-webkit-keyframes bounce_squaresWaveG{
+0%{
+background-color:#000000;
+}
+
+100%{
+background-color:#FFFFFF;
+}
+
+}
+
+@-ms-keyframes bounce_squaresWaveG{
+0%{
+background-color:#000000;
+}
+
+100%{
+background-color:#FFFFFF;
+}
+
+}
+
+@-o-keyframes bounce_squaresWaveG{
+0%{
+background-color:#000000;
+}
+
+100%{
+background-color:#FFFFFF;
+}
+
+}
+
+@keyframes bounce_squaresWaveG{
+  0%{
+    background-color:#000000;
+  }
+
+  100%{
+    background-color:#FFFFFF;
+  }
+}
+
+.pane.load p {
+  color: #3a0f0f;
+  text-shadow: icon-embossed-text-shadow;
+}
+
+.pjax-container .previous-page-off, .pjax-container .next-page-off, .pjax-container .previous-page, .pjax-container .next-page {
+  display:none;
+  visibility: hidden;
+}
