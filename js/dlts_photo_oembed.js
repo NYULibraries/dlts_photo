@@ -8,12 +8,17 @@
   var html = Y.one('html');
 
   function openLayersTilesLoading() {
-    if (Y.one('body').hasClass('openlayers-loading' )) {
-      Y.later(500, Y.one('.pane.load'), openLayersTilesLoading);
+
+    Y.log('openLayersTilesLoading')
+
+    if (Y.one('body').hasClass('openlayers-loading')) {
+      Y.soon(openLayersTilesLoading);
     }
     else {
+      Y.log('not loading')
       Y.one('.pane.load').hide();
     }
+
   }
 
   function fullscreenOn(e) {
@@ -234,6 +239,6 @@
 
   html.delegate('click', on_button_click, 'a.button');
 
-  Y.once('contentready', openLayersTilesLoading, '.dlts_viewer_map');
+  Y.soon(openLayersTilesLoading);
 
 });
