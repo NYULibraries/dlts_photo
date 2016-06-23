@@ -1,0 +1,10 @@
+name = DLTS Photo
+description = DLTS Photo theme.
+core = 7.x
+engine = phptemplate
+version = 1.5.0
+screenshot = logo.png
+
+stylesheets[all][] = css/dlts_photo.css
+
+regions[content] = Content

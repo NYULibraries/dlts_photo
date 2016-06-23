@@ -1114,7 +1114,7 @@ body.node-type-dlts-photograph {
 
 .navbar ul {
   margin-top: 0;
-  display: inline;  
+  display: inline;
 }
 
 .navbar ul li {
@@ -1322,7 +1322,18 @@ background-color:#FFFFFF;
   margin-right: 1em;
 }
 
-
 .navbar-fullscreen a span {
   background-image: initial;
+}
+
+body.toolbar-drawer {
+  padding-top: 0;
+}
+
+body.toolbar {
+  padding-top: 0;
+}
+
+.dlts-photo-collection, .dlts-photograph-set {
+  margin: 1em;
 }

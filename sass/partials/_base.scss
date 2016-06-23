@@ -12,9 +12,9 @@ body {
 a, a:link {
   text-decoration:none;
   color:$link-color;
-}  
-     
-a:visited {  
+}
+
+a:visited {
   text-decoration:none;
   color:$link-color-visited;
 }
@@ -30,7 +30,7 @@ a:active {
 .wrapper {
   padding: 0;
   margin:0 auto;
-} 
+}
 
 #header {
   padding:.5em 1em;
@@ -48,10 +48,10 @@ a:active {
 #page-title {
   margin:0;
   padding:0 .25em;
-  background:$dark-background;   
+  background:$dark-background;
   color:#fff;
   height: 30px;
-  line-height:1.1em;  
+  line-height:1.1em;
   overflow:hidden;
   span {
     display:block;
@@ -60,14 +60,14 @@ a:active {
     height:30px;
     background-image: url(../images/book-viewer-icons.png);
     background-position: -488px -9px;
-    opacity:$active-opacity;  
+    opacity:$active-opacity;
   }
 }
 
-#book-navbar { 
+#book-navbar {
   width:100%;
   height: 50px;
-  background:$light-background; 
+  background:$light-background;
   overflow:hidden;
 }
 
@@ -75,24 +75,24 @@ a:active {
   display:block;
   float:left;
   height:44px;
-  &.navbar-spacer-1 { 
+  &.navbar-spacer-1 {
     width:(100% / $navbar-columns) * $navbar-spacer-1;
   }
-  &.navbar-spacer-2 { 
+  &.navbar-spacer-2 {
     width:(100% / $navbar-columns) * $navbar-spacer-2;
-  } 
+  }
 }
 
-.navbar { 
+.navbar {
   display:inline;
-  .navbar-item { 
+  .navbar-item {
     width:100% / ($navbar-columns);
     min-width:48px;
     display:inline;
     float: left;
-    margin:0;  
-  }  
-  a, 
+    margin:0;
+  }
+  a,
   span,
   .olControlDLTSZoomInItemInactive,
   .olControlDLTSZoomOutItemInactive {
@@ -110,38 +110,38 @@ a:active {
 .navbar span {
   &:hover {
     opacity:$active-opacity;
-  } 
+  }
   &.first-page-off,
   &.first-page-off:hover {
       background-position: -400px 0px;
       opacity:$dimmed-opacity;
       cursor: default;
   }
-  &.previous-page-off, 
+  &.previous-page-off,
   &.previous-page-off:hover {
     background-position: -312px 0;
     opacity:$dimmed-opacity;
     cursor: default;
   }
-  &.next-page-off, 
+  &.next-page-off,
   &.next-page-off:hover {
-    background-position: -356px 0; 
+    background-position: -356px 0;
     opacity:$dimmed-opacity;
     cursor: default;
   }
   &.last-page-off,
-  &.last-page-off:hover { 
+  &.last-page-off:hover {
     background-position: -444px 0;
     opacity:$dimmed-opacity;
     cursor: default;
   }
-} 
+}
 
 .navbar a {
   &:hover {
     opacity:$active-opacity;
   }
-  &.double-page { 
+  &.double-page {
     background-position: 0 0;
   }
   &.double-page {
@@ -166,7 +166,7 @@ a:active {
     background-position: -224px 0;
   }
   &.zoom_in_max {
-    background-position: -268px 0;   
+    background-position: -268px 0;
     opacity:$dimmed-opacity;
     cursor: default;
   }
@@ -176,23 +176,23 @@ a:active {
     cursor: default;
   }
   &.zoom_out_min:hover {
-    cursor: default;  
+    cursor: default;
   }
-  &.first-page { 
+  &.first-page {
     background-position: -400px 0px;
   }
-  &.previous-page { 
+  &.previous-page {
     background-position: -312px 0;
   }
   &.next-page {
     background-position: -356px 0;
   }
-  &.last-page { 
+  &.last-page {
     background-position: -444px 0;
   }
   &.thumbnails {
     background-position: -92px 0;
-  }  
+  }
 }
 
 .navbar #control-zoom div {
@@ -205,8 +205,8 @@ a:active {
   &.olControlDLTSZoomOutItemInactive {
     background-position: -224px 0;
   }
-} 
- 
+}
+
 // Pager Contols
 #book-navbar {
   .item-list {
@@ -215,38 +215,38 @@ a:active {
     text-align:center;
     .pager li {
       padding:0;
-      margin:0; 
-    } 
+      margin:0;
+    }
   }
 }
 
 .pager {
   display:inline;
-  li { 
+  li {
     font-family: $pager-fonts;
     width:100% / ($navbar-columns + 2);
     min-width:48px;
     display:inline;
     float: left;
-   
+
     &.pager-previous a,
     &.pager-first a,
     &.pager-next a,
-    &.pager-last a { 
+    &.pager-last a {
        background-image: $controls-image;
        background-repeat: no-repeat;
        text-indent: -1000em;
      }
-     &.pager-first a { 
+     &.pager-first a {
        background-position: -400px 0px;
      }
-     &.pager-previous a { 
+     &.pager-previous a {
        background-position: -312px 0;
      }
      &.pager-next a {
        background-position: -356px 0;
      }
-     &.pager-last a { 
+     &.pager-last a {
        background-position: -444px 0;
      }
      &.pager-current,
@@ -256,7 +256,7 @@ a:active {
         margin:12px auto;
         width:100% / ($navbar-columns + 2);
         min-width:48px;
-        height: 46px; 
+        height: 46px;
         font-size:1.4em;
         border:none;
         line-height:2em;
@@ -268,7 +268,7 @@ a:active {
      a {
        display: block;
        margin:0 auto;
-        
+
        width: 44px;
        height: 46px;
        font-size:1.4em;
@@ -279,7 +279,7 @@ a:active {
          opacity:$active-opacity;
          text-decoration:none;
        }
-     } 
+     }
   }
 }
 
@@ -364,7 +364,7 @@ body.node-type-dlts-photograph {
 
 .navbar ul {
   margin-top: 0;
-  display: inline;  
+  display: inline;
 }
 
 .navbar ul li {
