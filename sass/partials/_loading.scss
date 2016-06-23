@@ -1,0 +1,82 @@
+.pane.load {
+  position: fixed;
+  text-align: center;
+  top: 45%;
+  left: 50%;
+  height: $loading-segments-height + 20px;
+  width: $loading-segments-total-width;
+  $halfwidth: -($loading-segments-total-width / 2);
+  margin-left: $halfwidth + 240 / 2;
+  margin-left: -($loading-segments-total-width / 2);
+  p {
+    color: #333;
+    padding-top: 10px;
+    @include bv-text-shadow(icon-embossed-text-shadow);
+  }
+  .loading {
+    opacity: 0;
+  }
+}
+
+.pane {
+  &.display.loading {
+    .dlts_image_map {
+      display: none;
+      visibility: hidden;
+    }
+  }
+}
+
+body.openlayers-loading {
+  .olLayerDiv {
+    opacity: 0;
+  }
+  .pane.load.loading {
+    opacity: 1;
+    transition: opacity .5s;
+    z-index: 100;
+  }
+}
+
+.olLayerDiv {
+  opacity: 1;
+  transition: opacity .5s;
+}
+
+// Animation originally generated at http://cssload.net/en/
+// Sassified by DLTS
+// Relies on libraries/compass-animate/_animations & libraries/compass-animate/_keyframes from https://github.com/ZeeAgency/compass-animation
+
+// Creates the animation ID($loading-name in variables)
+##{$loading-name} {
+  position: relative;
+  width: $loading-segments-total-width;
+  height: $loading-segments-height;
+}
+
+// Create the animation class
+$loading-animation-start-color: #eeeeee;
+$loading-animation-end-color: #666666;
+
+.#{$loading-name} {
+  position: absolute;
+  top: 0;
+  background-color: $loading-animation-start-color;
+  width: $loading-segments-width;
+  height: $loading-segments-height;
+  @include border-radius($loading-segments-border-radius);
+  @include animation($loading-animation-name $loading-animation-duration $loading-animation-direction $loading-animation-iteration-count);
+}
+
+// Generates the animation individual classes using bv-animation-loop @mixin
+@include bv-animation-loop($loading-name, $loading-segments-width-padding, $loading-segments-total, $loading-animation-duration, $loading-animation-start-offset);
+
+// Generates the keyframes
+@include keyframes($loading-animation-name) {
+  0% {
+    background-color: $loading-animation-start-color;
+  }
+  100% {
+    background-color: $loading-animation-end-color;
+  }
+}

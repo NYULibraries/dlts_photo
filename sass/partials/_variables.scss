@@ -1,20 +1,42 @@
-$navbar-columns: 12;     
+$navbar-columns: 12;
 $navbar-spacer-1: 2;
 $navbar-spacer-2: 1;
 
-// Typography 
+// Typography
 $controls-image: url('../images/book-viewer-icons.png');
 $active-opacity: 1;
 $normal-opacity: .7;
-$dimmed-opacity: .2; 
-$pager-fonts:"Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; 
+$dimmed-opacity: .2;
+$pager-fonts:"Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 
 $link-color:#cc341f;
 $link-color-over: saturate($link-color, 10%);
 $link-color-visited: desaturate($link-color, 20%);
 
 $light-background:#e5e5e5;
-$dark-background:#515151;  
+$dark-background:#515151;
+
+$navbar-icon-color: $dark-background;
 
 $page-background:#666;
 $metadata-background:#fcfcfc;
+
+// Loading animation and pane
+
+$loading-segments-width: 19px;
+$loading-segments-height: 19px;
+$loading-segments-padding: 3;
+$loading-segments-border-radius: 3px;
+$loading-segments-width-padding: $loading-segments-width + $loading-segments-padding;
+$loading-segments-total: 8;
+$loading-segments-total-width: $loading-segments-width-padding * $loading-segments-total;
+
+$loading-animation-start-color: $navbar-icon-color;
+$loading-animation-end-color: $page-background;
+
+$loading-name: squaresWaveG;
+$loading-animation-name: bounce_#{$loading-name};
+$loading-animation-duration: 0.8s;
+$loading-animation-iteration-count: infinite;
+$loading-animation-direction: linear;
+$loading-animation-start-offset: 0.24;
