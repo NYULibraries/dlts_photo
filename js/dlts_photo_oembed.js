@@ -8,17 +8,12 @@
   var html = Y.one('html');
 
   function openLayersTilesLoading() {
-
-    Y.log('openLayersTilesLoading')
-
     if (Y.one('body').hasClass('openlayers-loading')) {
       Y.soon(openLayersTilesLoading);
     }
     else {
-      Y.log('not loading')
       Y.one('.pane.load').hide();
     }
-
   }
 
   function fullscreenOn(e) {
