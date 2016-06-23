@@ -9,7 +9,7 @@
 
   function openLayersTilesLoading() {
     if (Y.one('body').hasClass('openlayers-loading')) {
-      Y.soon(openLayersTilesLoading);
+      Y.later(500, window, openLayersTilesLoading, [], false);
     }
     else {
       Y.one('.pane.load').hide();
