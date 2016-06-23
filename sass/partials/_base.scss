@@ -562,7 +562,31 @@ background-color:#FFFFFF;
   text-shadow: icon-embossed-text-shadow;
 }
 
-.pjax-container .previous-page-off, .pjax-container .next-page-off, .pjax-container .previous-page, .pjax-container .next-page {
+.pjax-container .previous-page-off,
+.pjax-container .next-page-off,
+.pjax-container .previous-page,
+.pjax-container .next-page {
   display:none;
   visibility: hidden;
+}
+
+.navbar-fullscreen {
+  float: right;
+  margin-right: 1em;
+}
+
+.navbar-fullscreen a span {
+  background-image: initial;
+}
+
+body.toolbar-drawer {
+  padding-top: 0;
+}
+
+body.toolbar {
+  padding-top: 0;
+}
+
+.dlts-photo-collection, .dlts-photograph-set {
+  margin: 1em;
 }

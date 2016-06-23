@@ -1,0 +1,15 @@
+# Ignore configuration files that may contain sensitive information.
+
+\#*
+*~
+.DS_Store
+.project
+.sass-cache
+
+# Ignore Intellij stuff
+.idea/
+
+# Ignore Eclipse conf files
+.buildpath
+.settings/*
+
