@@ -108,6 +108,7 @@ function dlts_photo_preprocess_page( &$vars ) {
       /** Add YUI Library from YUI Open CDN */
       drupal_add_js($yui, 'external', array('group' => JS_LIBRARY, 'weight' => -100 ));
       drupal_add_js($theme_path . '/js/crossframe.js', array('type' => 'file', 'scope' => 'header', 'weight' => 4));
+      drupal_add_js($theme_path . '/js/ui.keyboard.yui.js', array('type' => 'file', 'scope' => 'header', 'weight' => 4));      
       drupal_add_js($theme_path . '/js/dlts_photo_oembed.js', array('type' => 'file', 'scope' => 'header', 'weight' => 5));
       if (isset($browser['msie']) && $browser['msie'] < 10) {
         drupal_add_js ( $theme_path . '/js/history.js', array('group' => JS_LIBRARY, 'weight' => -101 ));
