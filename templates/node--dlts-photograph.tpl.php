@@ -14,6 +14,8 @@
       </ul>
       </div>
     </div>
+  <div id='openseadragon-viewer'></div>
   <div class="pjax-container" data-sequence="<?php print $sequence_number ?>"><?php print $page_content; ?></div>
+
   <?php print $loadpane ?>
 <?php endif; ?>

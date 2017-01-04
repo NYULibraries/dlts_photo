@@ -1,15 +1,26 @@
-;YUI().use('node', 'event', 'event-custom', 'pjax', 'gallery-soon', 'crossframe', function (Y) {
+;YUI().use('node', 'event', 'event-custom', 'pjax', 'gallery-soon', 'io', 'json-parse', 'promise', 'crossframe', function (Y) {
 
   'use strict';
 
   /** set a X-PJAX HTTP header for all IO requests */
+  /** not sure if we need this but it does require setting some headers on the LORIS server */ 
   Y.io.header('X-PJAX', 'true');
 
   var html = Y.one('html');
+  var os = OpenSeadragon({
+		 id:   "openseadragon-viewer",
+		 prefixUrl:          "/sites/all/libraries/openseadragon/images/",
+		preserveViewport:   true,
+		visibilityRatio:    1,
+		 sequenceMode:      false,
+		  tileSources: [] 
+	});
 
-  function openLayersTilesLoading() {
-    if (Y.one('body').hasClass('openlayers-loading')) {
-      Y.later(500, window, openLayersTilesLoading, [], false);
+
+ 
+ function openseadragonTilesLoading() {
+    if (Y.one('body').hasClass('openseadragon-loading')) {
+      Y.later(500, window, openseadragonLoading, [], false);
     }
     else {
       Y.one('.pane.load').hide();
@@ -93,7 +104,7 @@
   var pjax_load = function(e) {
       var node, map, next, prev, nav_previous, nav_next, sequence, sequence_count, config;
       node = e.content.node;
-      map = node.one('.dlts_image_map');
+      map = node.one('.openseadragon-data');
       next = node.one('.next-page');
       prev = node.one('.previous-page');
       sequence = parseInt(node.getAttribute('data-sequence'), 10);
@@ -130,33 +141,36 @@
               compositingLayerCount: map.getAttribute('data-compositing-layer')
           }
       };
-      Y.on('available', change_page, '#' + config.id, OpenLayers, config);
+      Y.on('available', change_page, '#' + config.id, this, config);
   };
 
+  
+  function init_viewer(viewEl) {
+	var uuid = viewEl.getAttribute("data-image-source");
+	Y.Promise(function (resolve, reject) {
+	    Y.io("http://loris-dev.dlts.org/loris/" + encodeURIComponent(uuid) + "/info.json", {
+		on: { 
+		  success : function(tx,r) { 
+			 try { 
+				resolve( Y.JSON.parse(r.responseText) );
+			 }
+			 catch (e) { alert("JSON issue with LORIS" + e); return; }	
+		  }
+		} 
+      })
+	}).then( function(manifest) { 
+   		os.open(manifest);
+	        openseadragonTilesLoading();	
+      }); 
+
+   }
+  
   var change_page = function(config) {
-      var map, service, zoom, open_layers_dlts;
-      open_layers_dlts = OpenLayers.DLTS;
-      if (Y.Lang.isObject(open_layers_dlts.pages[0], true)) {
-          map =  open_layers_dlts.pages[0];
-          service = map.baseLayer.url;
-          zoom = map.getZoom();
-          map.destroy();
-          open_layers_dlts.pages = [];
-      }
-      if (Y.Object.isEmpty(open_layers_dlts.pages)) {
-    	  open_layers_dlts.Page(config.id, config.uri, {
-              zoom: zoom,
-              boxes: config.boxes,
-              service: service,
-              imgMetadata: config.metadata
-          });
-          Y.on('contentready', function() {
-            Y.fire('openlayers:change', config);
-          }, '#' + config.id);
-      }
-  };
-
+	init_viewer(config.node);	
+  }
+  
   function onThumbnails(e) {
+
     e.halt();
     var node = Y.one('.node.pjax');
     var dataSequence = 0;
@@ -234,6 +248,14 @@
 
   html.delegate('click', on_button_click, 'a.button');
 
-  Y.soon(openLayersTilesLoading);
+  Y.soon(openseadragonTilesLoading);
+
+  Y.Promise(function (resolve, reject) {
+	var reasonForFailure = new Error('unable to get manifest');	
+        var viewEl = Y.one(".openseadragon-data");
+	var manifest = init_viewer(viewEl); 
+	resolve(manifest);
+  });  
+
 
 });
