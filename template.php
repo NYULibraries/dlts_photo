@@ -92,6 +92,34 @@ function dlts_photo_preprocess_node(&$vars) {
 function dlts_photo_preprocess_page( &$vars ) {
   $browser = dlts_utilities_browser_info();
   $theme_path = path_to_theme();
+  drupal_add_js(libraries_get_path('openseadragon').'/openseadragon.min.js',  array('group' => JS_LIBRARY));
+  drupal_add_js($theme_path.'/js/dlts-openseadragon.js',  array('group' => JS_LIBRARY));
+  
+  /** Look up the Photo Set ID */
+  if ( isset($vars["node"] )) { 
+  	$items = field_get_items('node', $vars['node'], 'field_photo_set');
+
+	  if (isset($items[0]['node'])) {
+	    $vars['photo_set_nid'] = $items[0]['node']->nid;
+	    $vars['node']->photo_set_title = $items[0]['node']->title;
+	  }
+	  elseif (isset($items[0]['nid'])) {
+	    $vars['photo_set_nid'] = $items[0]['nid'];
+  	 }
+
+
+  	$js_inline = 'var set_id ='. $vars['photo_set_nid'] . ';';
+	  $js_options = array(
+	      'group' => JS_DEFAULT,
+	      'type' => 'inline',
+	      'every_page' => FALSE,
+	      'weight' => 5,
+	      'scope' => 'header',
+	      'cache' => TRUE,
+	      'defer' => TRUE,
+	  );
+	  drupal_add_js($js_inline, $js_options);
+  } 
   if ( dlts_utilities_is_pjax() ) {
     $vars['theme_hook_suggestions'][] = 'page__pjax__photo__page';
     if ( isset( $vars['node'] ) ) {
@@ -119,47 +147,14 @@ function dlts_photo_preprocess_page( &$vars ) {
 
 function dlts_photo_dlts_image_hires($variables) {
   $module_path = drupal_get_path('module', 'dlts_image');
+  $theme_path = path_to_theme();
+  drupal_add_js(libraries_get_path('openseadragon').'/openseadragon.min.js',  array('group' => JS_LIBRARY));
+  drupal_add_js($theme_path.'/js/dlts-openseadragon.js',  array('group' => JS_LIBRARY));
   drupal_add_css($module_path . '/css/dlts_image.css');
   $file = $variables['file'];
+  $fileUri = str_replace("public://", "", $file['uri']); 
   $fid = 'id-'. $file['fid'];
-  $zoom = (isset($file['zoom'])) ? $file['zoom'] : 1;
-  $fileUri = file_create_url($file['uri']);
-  $parameters = drupal_get_query_parameters();
-  if (isset($parameters)) {
-    if (isset($parameters['zoom']) && is_numeric($parameters['zoom'])) {
-      if ($parameters['zoom'] > $variables['file']['djakota_levels']) {
-        $zoom = abs($variables['file']['djakota_levels']);
-      }
-      else {
-        $zoom = abs($parameters['zoom']);
-      }
-    }
-  }
-  /** Add Openlayers to the page */
-  drupal_add_js(variable_get( 'dlts_image_openlayers_source', 'sites/all/libraries/openlayers/lib/OpenLayers.js'), array('group' => JS_LIBRARY));
-  $openlayers_options = array(
-      'zoom' => $zoom,
-      'service' => variable_get('dlts_image_djatoka_service', ''),
-      'imgMetadata' => array(
-          'width' => $file['djakota_width'],
-          'height' => $file['djakota_height'],
-          'levels' => $file['djakota_levels'],
-          'dwtLevels' => $file['djakota_dwtLevels'],
-          'compositingLayerCount' => $file['djakota_compositingLayerCount']
-      ),
-  );
-  $js_inline = '(function(O){O.DLTS.Page("'. $fid .'","'.  $fileUri .'",'. json_encode($openlayers_options) .')})(OpenLayers);';
-  $js_options = array(
-      'group' => JS_DEFAULT,
-      'type' => 'inline',
-      'every_page' => FALSE,
-      'weight' => 5,
-      'scope' => 'header',
-      'cache' => TRUE,
-      'defer' => TRUE,
-  );
-  drupal_add_js($js_inline, $js_options);
-  return '<div id="' . $fid . '" class="dlts_image_map olMap" data-sequence-count="" data-sequence="" data-uri="'. $fileUri .'" data-width="'. $file['djakota_width'] .'" data-height="'. $file['djakota_height'] .'" data-levels="'. $file['djakota_levels'] .'" data-dwtLevels="'. $file['djakota_dwtLevels'] .'" data-compositing-layer="'. $file['djakota_compositingLayerCount'] .'"></div>';
+  return '<div id="' . $fid . '" class="openseadragon-data" style="width:100%; height:100%" data-image-source="' . $fileUri . '"></div>'; 
 }
 
 /**
